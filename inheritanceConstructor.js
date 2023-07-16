@@ -40,3 +40,51 @@ console.dir(Student.prototype.constructor);
 console.log(mike instanceof Student); //true
 console.log(mike instanceof Person); //ture
 console.log(mike instanceof Object); //ture
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+const Car = function (make, speed) {
+  this.make = make;
+  this.speed = speed;
+};
+Car.prototype.accelerate = function () {
+  this.speed += 10;
+  console.log(`${this.make} car speed increased by 10 => ${this.speed}Km/hr`);
+};
+Car.prototype.break = function () {
+  this.speed -= 5;
+  console.log(`${this.make} car speed decreased by 5 => ${this.speed}Km/hr`);
+};
+
+const EV = function (make, speed, charge) {
+  Car.call(this, make, speed);
+  this.charge = charge;
+  console.log(
+    `${this.make}  is going at speed of ${this.speed} and with the charge of ${this.charge} `
+  );
+};
+//linking parent to child manually
+EV.prototype = Object.create(Car.prototype);
+EV.prototype.chargebattery = function (chargeto) {
+  this.charge = chargeto;
+  console.log(`${this.make} EV  is cahrging at ${this.charge} `);
+};
+
+//polymorphism - overridding the existing method and  in the prototypal chain it will be at the top and js will take the method name at the top of the prototypal chain . because at the bottom the previous or the first created or the older version if that method exist. child=>parent=>inbuilt obj and if you see in the dom it is in the order if top to bottom approach
+EV.prototype.accelerate = function () {
+  this.speed += 20;
+  this.charge -= 1;
+  console.log(
+    `${this.make} EV speed increased by 20 => ${this.speed}Km/hr  and charge decreased 1 % ${this.charge}`
+  );
+};
+
+const tesla = new EV('Tesla', 120, 23);
+
+console.log(tesla);
+
+tesla.break(); //parent(car)
+tesla.accelerate(); //child(ev)
+tesla.chargebattery(90); //child(ev)
+tesla.accelerate();
+tesla.break();
