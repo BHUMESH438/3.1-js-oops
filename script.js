@@ -46,6 +46,7 @@ console.log(Person111.prototype.constructor); //with prototype
 const arr = [1, 2];
 console.log(arr.__proto__);
 
+//---------------------challange-1 using the consturctor function
 class Car {
   constructor(make, speed) {
     this.make = make;
@@ -177,3 +178,38 @@ console.log(steve.__proto__ === steveProto);
 const sara = Object.create(steveProto);
 sara.init('sara', 1998);
 sara.age();
+
+class Car1 {
+  constructor(make, speed) {
+    this.make = make;
+    this.speed = speed;
+  }
+  accelerate() {
+    this.speed += 10;
+    console.log(
+      `the ${this.make} after accelerate  new speed is ${this.speed} km/h`
+    );
+  }
+  break() {
+    this.speed -= 5;
+    console.log(`the ${this.make} after break new speed is ${this.speed}km/h`);
+  }
+
+  set speedUS(speeed) {
+    if (speeed) {
+      console.log(`set speed ${speeed} m/h to ${speeed * 1.6} km/h`);
+      return (this.speed = speeed * 1.6);
+    } else alert(`${speed} give the speed!`);
+  }
+  get speedUS() {
+    console.log(`get speed ${this.speed}km/h in ${this.speed / 1.6} mi/h`);
+    return this.speed / 1.6;
+  }
+}
+
+const ford = new Car1('ford', 120);
+console.log('return value getters>>>', ford.speedUS);
+ford.accelerate();
+ford.break();
+ford.speedUS = 50; //set speed
+console.log('return value getters>>>', ford.speedUS);
